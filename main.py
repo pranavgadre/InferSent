@@ -5,6 +5,7 @@
 import numpy
 import torch
 from models import InferSent
+import csv
 
 # Set up infersent
 V = 1 # 1: GloVe    2: fastText
@@ -26,9 +27,18 @@ infersent.build_vocab_k_words(K=100000)
 
 # Import sentences
 sentences = []
-with open('encoder/samples.txt') as f:
-    for line in f:
-        sentences.append(line.strip())
+labels = []
+with open('dataset/TrainingData/articles_with_biases1.csv') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=',')
+    for line in csv_reader:
+        num = line[0]
+        sent = line[1]
+        bias = line[2]
+        # sentences.append(line.strip())
+        print('Number is: ' + str(num))
+        print('Sentence: ' + sent)
+        print('bias: ' + str(bias))
+        break
 sentences = sentences[:10]
 print('{0} sentences will be encoded to embeddings.'.format(len(sentences)))
 
